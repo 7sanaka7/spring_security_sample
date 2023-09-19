@@ -3,6 +3,8 @@ package com.example.service;
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.authority.AuthorityUtils;
 //import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.authority.AuthorityUtils;
+
 import com.example.entity.User;
 
 
@@ -31,6 +33,14 @@ public class LoginUser implements UserDetails {
 	public String getUsername() {
 		return this.user.getEmail();
 	}
+	
+	public Cllection<? extends GrantedAuthority> getAuthorities(){
+		//ロールカラムを見て、認証ユーザのロールを設定
+		if(this.user.getRole().equals("管理者"))｛
+				return AuthorityUtils.createAuthorityList("ADMIN","GENERAL");
+	}
+	
+	return AuthorityUtils.createAthorityList("GENERAL");
 	
 	
 }

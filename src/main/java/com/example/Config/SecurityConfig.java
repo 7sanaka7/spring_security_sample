@@ -1,5 +1,7 @@
 package com.example.Config;
 
+import org.springframework.context.annotation.Bean;
+
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -29,7 +31,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    //ログアウト処理
 	    http.logout()
 	    .logoutUrl("/logout") //ログアウト処理のパス
-	    .logoutSuccessUrl("/loginForm") //ログアウト成功後のパス
+	    .logoutSuccessUrl("/loginForm") ;//ログアウト成功後のパス
+	    
+	    //認可の設定
+	    http.authorizeRequests()
+	    	.antMatchers("/loginForm").permitALL()
+	    	.antMatchers("/admin").hasAuthority("ADMIN") //管理者のみadminにアクセス可能
+	    	.antRequest().authoriticated();
 	}
 	
 	@Bean
